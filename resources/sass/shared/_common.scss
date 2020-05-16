@@ -1,0 +1,26 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.invalid {
+  &.react-select-lg__control {
+    border: 1px solid $danger !important;
+  }
+}
+
+.site {
+  .toggler {
+    display: none;
+    text-align: right;
+    padding: 0 20px;
+    button {
+      font-size: 30px;
+    }
+    @include media-breakpoint-down('md') {
+      display: block;
+    }
+  }
+}

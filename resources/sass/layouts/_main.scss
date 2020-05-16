@@ -1,0 +1,9 @@
+.site-main {
+  background-color: $white;
+  padding: 10px;
+  padding-top: 0;
+  width: calc(100% - 360px);
+  @include media-breakpoint-down('md') {
+    width: 100%;
+  }
+}

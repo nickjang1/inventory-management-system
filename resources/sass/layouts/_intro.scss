@@ -1,0 +1,143 @@
+.site-intro {
+  min-height: 100vh;
+  @include media-breakpoint-up('lg') {
+    display: flex;
+  }
+
+  .site-intro-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    background-color: beige;
+    @include media-breakpoint-up('lg') {  
+      min-height: 100vh;
+    }
+
+    max-width: 100%;
+    color: color-yiq($primary);
+
+    .intro-box-content {
+      width: 284px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 100px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .brand {
+        margin-bottom: 12px;
+        width: 100%;
+
+        .brand-logo {
+          height: 200px;
+          margin-left: auto;
+          margin-right: auto;
+
+          img {
+            height: auto;
+            margin-top: 100px;
+            width: 100%;
+          }
+        }
+
+        .brand-title {
+          font-size: 38px;
+          font-weight: $font-weight-bolder;
+        }
+      }
+
+      .intro-box-form-field {
+        width: 100%;
+
+        ul {
+          list-style: none;
+          padding: 0;
+          border: none;
+
+          li {
+            padding: 0 12px;
+            position: relative;
+          }
+
+          li:first-child {
+            padding-top: 12px;
+          }
+
+          li:last-child {
+            padding-bottom: 12px;
+          }
+        }
+
+        .form-fields {
+          .form-group {
+            input {
+              border-radius: 0;
+            }
+          }
+
+          .form-group:first-child {
+            input {
+              border-top-left-radius: 5px;
+              border-top-right-radius: 5px;
+            }
+          }
+
+          .form-group:last-child {
+            margin-bottom: 51px;
+
+            input {
+              border-bottom-left-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+          }
+        }
+
+        .form-links {
+          .btn {
+            min-width: 169px;
+          }
+
+          .form-group:first-child {
+            margin-bottom: 18.61px;
+          }
+
+          .form-group:last-child {
+            a {
+              color: $indigo;
+              font-size: $font-size-sm;
+            }
+          }
+        }
+
+        .success-message {
+          margin-bottom: 38px;
+          max-width: 284px;
+          font-size: 15px;
+        }
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 0;
+
+        i {
+          position: absolute;
+          right: 21px;
+          top: 18px;
+          color: $purple;
+          font-weight: $font-weight-normal;
+          font-size: 15px;
+        }
+      }
+    }
+
+    .intro-box-footer {
+      color: $dark;
+      text-align: center;
+      font-size: $font-size-sm;
+      padding: 30px 0;
+    }
+  }
+}

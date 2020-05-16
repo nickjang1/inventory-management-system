@@ -1,0 +1,16 @@
+.table {
+  thead {
+    tr {
+      th {
+        white-space: normal !important;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.main-page {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    flex-wrap: wrap;
+    .page-title {
+      font-size: 32px;
+      font-family: 'OpenSans-ExtraBold';
+      line-height: 36px;
+    }
+    .header-action {
+      margin-left: auto;
+      padding-right: 40px;
+      @include media-breakpoint-down('sm') {
+        padding-right: 0;
+      }
+    }
+  }
+}
