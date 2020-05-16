@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePersonsTable extends Migration
+class CreatePaymentTermTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,11 @@ class CreatePersonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('persons', function (Blueprint $table) {
+        Schema::create('payment_term', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('created_by', 255);
             $table->string('modified_by', 255);
-            $table->string('first_name', 20);
-            $table->string('last_name', 20);
-            $table->string('address', 100);
-            $table->string('contact_number_1', 15);
-            $table->string('contact_number_2', 15);
-            $table->string('email_1');
-            $table->string('email_2');
-            $table->integer('role_id');
-            $table->integer('user_id');
+            $table->string('name', 50);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -38,6 +30,6 @@ class CreatePersonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('persons');
+        Schema::dropIfExists('payment_term');
     }
 }
