@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use SoftDeletes;
 
-    public static $ROLE_OWNER = 'owner';
+    // public static $ROLE_OWNER = 'owner';
 
     use Notifiable;
     use Billable;
@@ -25,7 +24,14 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'password', 'username', 'is_superuser'
+        'first_name',
+        'last_name',
+        'is_active',
+        'is_staff',
+        'email',
+        'password',
+        'username',
+        'is_superuser'
     ];
 
     /**

@@ -41,6 +41,46 @@ class Login extends Component {
 
   async login(auth) {
     await this.props.login(auth);
+    const users = await Api.get('users');
+    switch (users.response.status) {
+      case 200:
+        localStorage.setItem('users', JSON.stringify(users.body.users));
+        break;
+      default:
+        break;
+    }
+    const vendors = await Api.get('companies');
+    switch (vendors.response.status) {
+      case 200:
+        localStorage.setItem('vendors', JSON.stringify(vendors.body.companies));
+        break;
+      default:
+        break;
+    }
+    const roles = await Api.get('roles');
+    switch (roles.response.status) {
+      case 200:
+        localStorage.setItem('roles', JSON.stringify(roles.body.data));
+        break;
+      default:
+        break;
+    }
+    const inventory_types = await Api.get('inventory-types');
+    switch (inventory_types.response.status) {
+      case 200:
+        localStorage.setItem('inventory_types', JSON.stringify(inventory_types.body.data));
+        break;
+      default:
+        break;
+    }
+    const store_types = await Api.get('store-types');
+    switch (store_types.response.status) {
+      case 200:
+        localStorage.setItem('store_types', JSON.stringify(store_types.body.data));
+        break;
+      default:
+        break;
+    }
   }
 
   render() {

@@ -15,6 +15,7 @@ class Store extends Component {
     this.state = {
       stores: [],
       edit_store: {},
+      editIndex: -1,
       isOpenAddStoreModal: false,
       isOpenEditStoreModal: false
     };
@@ -40,30 +41,60 @@ class Store extends Component {
     });
   }
 
-  handleAddItem(store) {
-    console.log(store);
-  }
-
-  handleEdit(id) {
-    const { isOpenEditStoreModal, stores } = this.state;
-    this.setState({
-      isOpenEditStoreModal: !isOpenEditStoreModal,
-      edit_store: stores.find(item => item.id === id)
-    });
-  }
-
-  handleDelete(id) {
-    const { stores } = this.state;
-    const result = confirm('Are you sure you want to delete this Store?');
-    if (result) {
-      this.setState({
-        stores: stores.filter(item => item.id !== id)
-      });
+  async handleAddItem(store) {
+    const { response, body } = await Api.post('store', store);
+    switch (response.status) {
+      case 200:
+        this.setState({
+          stores: body.data,
+          isOpenAddStoreModal: false
+        });
+        break;
+      default:
+        break;
     }
   }
 
-  handleSaveItem(value) {
-    console.log(value);
+  handleEdit(id, index) {
+    const { isOpenEditStoreModal, stores } = this.state;
+    this.setState({
+      isOpenEditStoreModal: !isOpenEditStoreModal,
+      edit_store: stores.find(item => item.id === id),
+      editIndex: index
+    });
+  }
+
+  async handleDelete(id) {
+    const { stores } = this.state;
+    const result = confirm('Are you sure you want to delete this Store?');
+    if (result) {
+      const { response } = await Api.delete(`store/${id}`);
+      switch (response.status) {
+        case 200:
+          this.setState({
+            stores: stores.filter(item => item.id !== id)
+          });
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  async handleSaveItem(value) {
+    const { stores, editIndex } = this.state;
+    const { response } = await Api.put(`store/${value.id}`, value);
+    switch (response.status) {
+      case 200:
+        stores[editIndex] = value;
+        this.setState({
+          stores,
+          isOpenEditStoreModal: false
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   handleCancel() {
@@ -113,7 +144,7 @@ class Store extends Component {
           isOpenEditStoreModal && (
             <StoreEdit
               store={edit_store}
-              handleSave={this.handleSaveItem.bind(this)}
+              onSave={this.handleSaveItem.bind(this)}
               handleCancel={this.handleCancel.bind(this)}
             />
           )

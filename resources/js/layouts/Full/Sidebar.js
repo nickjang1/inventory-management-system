@@ -119,11 +119,11 @@ class Sidebar extends Component {
                 Assign Vendors
               </NavLink>
             </NavItem>
-            {/* <NavItem>
+            <NavItem>
               <NavLink tag={Link} to="/create-po">
                 Create PO
               </NavLink>
-            </NavItem> */}
+            </NavItem>
             <NavItem onClick={this.toggleClose}>
               <NavLink tag={Link} to="/create-purchase-order">
                 Create Purchase Order

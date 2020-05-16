@@ -17,7 +17,8 @@ class AddStore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: true
+      isOpen: true,
+      store_types: JSON.parse(localStorage.getItem('store_types'))
     };
     this.formikRef = React.createRef();
     this.handleCancel = this.handleCancel.bind(this);
@@ -35,18 +36,20 @@ class AddStore extends React.Component {
   handleSubmit(values) {
     let newData = {};
     newData = {
-      // code: values.code,
-      // name: values.name,
-      // store_type: values.store_type,
-      // contact_number: values.contact_number,
-      // contact_person: values.contact_person
+      code: values.code,
+      description: values.description,
+      status: values.status.value,
+      store_type_id: values.store_type.id,
+      contact_number: values.contact_number,
+      contact_person: values.contact_person,
+      email: values.email
     };
     const { onSave } = this.props;
     onSave(newData);
   }
 
   render() {
-    const { isOpen } = this.state;
+    const { isOpen, store_types } = this.state;
     return (
       <Modal
         isOpen={isOpen}
@@ -63,7 +66,8 @@ class AddStore extends React.Component {
             initialValues={{
               code: '',
               description: '',
-              store_status: null,
+              status: null,
+              store_type: null,
               contact_number: '',
               contact_person: '',
               email: ''
@@ -72,10 +76,11 @@ class AddStore extends React.Component {
               Yup.object().shape({
                 code: Yup.string().required('This field is required!'),
                 description: Yup.string().required('This field is required!'),
-                store_status: Yup.mixed().required('This field is required!'),
+                status: Yup.mixed().required('This field is required!'),
+                store_type: Yup.mixed().required('This field is required!'),
                 contact_number: Yup.string().required('This field is required!'),
                 contact_person: Yup.string().required('This field is required!'),
-                email: Yup.string().required('This field is required!')
+                email: Yup.string().email('Email is not valid!').required('Email is required!')
               })
             }
             onSubmit={this.handleSubmit.bind(this)}
@@ -115,15 +120,37 @@ class AddStore extends React.Component {
                         Status
                       </Label>
                       <Select
-                        name="store_status"
-                        classNamePrefix={!!errors.store_status && touched.store_status ? 'invalid react-select-lg' : 'react-select-lg'}
+                        name="status"
+                        classNamePrefix={!!errors.status && touched.status ? 'invalid react-select-lg' : 'react-select-lg'}
                         indicatorSeparator={null}
                         options={STORE_STATUSES}
                         getOptionValue={option => option.value}
                         getOptionLabel={option => option.label}
                         value={values.status}
                         onChange={(value) => {
-                          setFieldValue('store_status', value);
+                          setFieldValue('status', value);
+                        }}
+                        onBlur={handleBlur}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col sm="12">
+                    <FormGroup>
+                      <Label>
+                        Store Type
+                      </Label>
+                      <Select
+                        name="store_type"
+                        classNamePrefix={!!errors.store_type && touched.store_type ? 'invalid react-select-lg' : 'react-select-lg'}
+                        indicatorSeparator={null}
+                        options={store_types}
+                        getOptionValue={option => option.id}
+                        getOptionLabel={option => option.name}
+                        value={values.store_type}
+                        onChange={(value) => {
+                          setFieldValue('store_type', value);
                         }}
                         onBlur={handleBlur}
                       />
@@ -139,7 +166,6 @@ class AddStore extends React.Component {
                       <Input
                         name="description"
                         type="text"
-                        // disabled
                         value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}

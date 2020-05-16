@@ -24,5 +24,12 @@ class GeneralController extends Controller
             'status' => 200,
             'data' => $inventory,
         ]);
-  }
+    }
+    public function store_types() {
+        $store_types = DB::table('store_types')->get();
+        return response()->json([
+            'status' => 200,
+            'data' => $store_types,
+        ]);
+    }
 }

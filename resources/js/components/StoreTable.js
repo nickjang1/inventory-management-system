@@ -52,11 +52,11 @@ class StoreTable extends Component {
           activePage: 1
         });
       }
-      const { per_page } = this.state;
-      this.setState({
-        data: stores.slice(0, per_page)
-      });
     }
+    const { per_page } = this.state;
+    this.setState({
+      data: stores.slice(0, per_page)
+    });
   }
 
   handlePaginationChange(e, { activePage }) {
@@ -120,7 +120,7 @@ class StoreTable extends Component {
       pageOptions,
       current_perPage
     } = this.state;
-
+    const store_types = JSON.parse(localStorage.getItem('store_types'));
     return (
       <Table sortable celled selectable unstackable>
         <Table.Header>
@@ -138,8 +138,8 @@ class StoreTable extends Component {
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'store_type' ? direction : null}
-              onClick={this.handleSort.bind(this, 'store_type')}
+              sorted={column === 'store_type_id' ? direction : null}
+              onClick={this.handleSort.bind(this, 'store_type_id')}
             >
               Store Type
             </Table.HeaderCell>
@@ -192,7 +192,7 @@ class StoreTable extends Component {
                     {item.description}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.store_type}
+                    {store_types.find(s => s.id === item.store_type_id).name}
                   </Table.Cell>
                   <Table.Cell>
                     {item.contact_person}
@@ -211,7 +211,7 @@ class StoreTable extends Component {
                   </Table.Cell>
                   <Table.Cell>
                     <div className="actions d-flex w-100 justify-content-center align-items-center">
-                      <i className="fa fa-pencil fa-lg" onClick={() => onEdit(item.id)} style={{ marginRight: '10px', cursor: 'pointer' }} />
+                      <i className="fa fa-pencil fa-lg" onClick={() => onEdit(item.id, index)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                       <i className="fa fa-close fa-lg" onClick={() => onDelete(item.id)} style={{ cursor: 'pointer' }} />
                     </div>
                   </Table.Cell>

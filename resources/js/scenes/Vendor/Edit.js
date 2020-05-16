@@ -120,7 +120,7 @@ class EditVendor extends React.Component {
                 contact_number: Yup.string().required('This field is required!'),
                 contact_person: Yup.string().required('This field is required!'),
                 address: Yup.string().required('Required'),
-                email: Yup.string().required('required')
+                email: Yup.string().email('Email is not valid!').required('Email is required!')
               })
             }
             onSubmit={this.handleSubmit.bind(this)}

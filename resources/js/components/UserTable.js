@@ -56,6 +56,11 @@ class UserTable extends Component {
       this.setState({
         data: users.slice(0, per_page)
       });
+    } else {
+      const { per_page } = this.state;
+      this.setState({
+        data: users.slice(0, per_page)
+      });
     }
   }
 
@@ -121,31 +126,28 @@ class UserTable extends Component {
       current_perPage
     } = this.state;
 
+    const roles = JSON.parse(localStorage.getItem('roles'));
     return (
       <Table sortable celled selectable unstackable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
-              sorted={column === 'store_code' ? direction : null}
-              onClick={this.handleSort.bind(this, 'store_code')}
+              sorted={column === 'store_id' ? direction : null}
+              onClick={this.handleSort.bind(this, 'store_id')}
             >
               Store Code
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'user_name' ? direction : null}
-              onClick={this.handleSort.bind(this, 'user_name')}
+              sorted={column === 'username' ? direction : null}
+              onClick={this.handleSort.bind(this, 'username')}
             >
               Username
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'description' ? direction : null}
-              onClick={this.handleSort.bind(this, 'description')}
             >
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'type' ? direction : null}
-              onClick={this.handleSort.bind(this, 'type')}
             >
               User Type
             </Table.HeaderCell>
@@ -192,13 +194,13 @@ class UserTable extends Component {
                     {item.store_code}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.user_name}
+                    {item.username}
                   </Table.Cell>
                   <Table.Cell>
                     {item.description}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.type}
+                    {roles.find(r => r.id === item.role_id) ? roles.find(r => r.id === item.role_id).description : ''}
                   </Table.Cell>
                   <Table.Cell>
                     ***
@@ -217,7 +219,7 @@ class UserTable extends Component {
                   </Table.Cell>
                   <Table.Cell>
                     <div className="actions d-flex w-100 justify-content-center align-items-center">
-                      <i className="fa fa-pencil fa-lg" onClick={() => onEdit(item.id)} style={{ marginRight: '10px', cursor: 'pointer' }} />
+                      <i className="fa fa-pencil fa-lg" onClick={() => onEdit(item.id, index)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                       <i className="fa fa-close fa-lg" onClick={() => onDelete(item.id)} style={{ cursor: 'pointer' }} />
                     </div>
                   </Table.Cell>
