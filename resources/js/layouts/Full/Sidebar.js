@@ -77,7 +77,7 @@ class Sidebar extends Component {
         <Nav className="main-menu">
           <Navbar>
             <NavItem onClick={this.toggleClose}>
-              <NavLink tag={Link} to="/">
+              <NavLink tag={Link} to="/daily-cycle-count">
                 Daily Cycle Count
               </NavLink>
             </NavItem>

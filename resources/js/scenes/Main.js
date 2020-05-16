@@ -87,7 +87,7 @@ class Main extends Component {
           <Route component={Store} path="/store" exact />
           <Route component={Item} path="/item" exact />
           <Route component={Vendor} path="/vendor" exact />
-          <Route component={CycleCount} path="/" exact />
+          <Route component={CycleCount} path="/daily-cycle-count" exact />
         </Switch>
       </Layout>
     );
