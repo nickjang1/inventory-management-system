@@ -107,7 +107,7 @@ class Sidebar extends Component {
             </NavItem>
           </Navbar>
         </Nav>
-        <Nav>
+        {/* <Nav>
           <div className="navbar-item">
             >> DC Ordering
           </div>
@@ -154,7 +154,7 @@ class Sidebar extends Component {
               </NavLink>
             </NavItem>
           </Navbar>
-        </Nav>
+        </Nav> */}
       </div>
     );
   }

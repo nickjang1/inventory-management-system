@@ -22,12 +22,11 @@ class Item extends Component {
   }
 
   async componentDidMount() {
-    const companies = await Api.get('items');
-    const { response, body } = companies;
-    switch (response.status) {
+    const items = await Api.get('items');
+    switch (items.response.status) {
       case 200:
         this.setState({
-          items: body.items
+          items: items.body.items
         });
         break;
       default:

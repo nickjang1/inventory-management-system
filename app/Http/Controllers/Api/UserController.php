@@ -233,7 +233,7 @@ class UserController extends Controller
         Store::where('id', $data['store_id'])->update($newStore);
         return response()->json([
             'status' => 'success'
-        ], 200); 
+        ], 200);
       }
     }
 }

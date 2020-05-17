@@ -56,6 +56,11 @@ class CostingTable extends Component {
       this.setState({
         data: costings.slice(0, per_page)
       });
+    } else {
+      const { per_page } = this.state;
+      this.setState({
+        data: costings.slice(0, per_page)
+      });
     }
   }
 
@@ -120,7 +125,7 @@ class CostingTable extends Component {
       pageOptions,
       current_perPage
     } = this.state;
-
+    const inventories = JSON.parse(localStorage.getItem('inventory_types'));
     return (
       <Table sortable celled selectable unstackable>
         <Table.Header>
@@ -196,16 +201,16 @@ class CostingTable extends Component {
                   key={index}
                 >
                   <Table.Cell>
-                    {item.item_code}
+                    {item.item.code}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.description}
+                    {item.item.description}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.status ? 'Active' : 'Inactive'}
+                    {item.item.status ? 'Active' : 'Inactive'}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.inventory_type}
+                    {inventories.find(v => v.id === item.item.inventory_type_id) ? inventories.find(v => v.id === item.item.inventory_type_id).name : ''}
                   </Table.Cell>
                   <Table.Cell>
                     {item.total_qty}
@@ -224,7 +229,7 @@ class CostingTable extends Component {
                   </Table.Cell>
                   <Table.Cell>
                     <div className="actions d-flex w-100 justify-content-center align-items-center">
-                      <i className="fa fa-pencil fa-lg" onClick={() => onEdit(item.id)} style={{ marginRight: '10px', cursor: 'pointer' }} />
+                      <i className="fa fa-pencil fa-lg" onClick={() => onEdit(item.id, index)} style={{ marginRight: '10px', cursor: 'pointer' }} />
                       <i className="fa fa-close fa-lg" onClick={() => onDelete(item.id)} style={{ cursor: 'pointer' }} />
                     </div>
                   </Table.Cell>

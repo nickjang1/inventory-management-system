@@ -3,18 +3,44 @@ import React, {
 } from 'react';
 import { Button } from 'reactstrap';
 import CycleCountTable from '../../components/CycleCountTable';
-import { CYCLECOUNTS } from '../../config/data';
+// import { CYCLECOUNTS } from '../../config/data';
+import Api from '../../apis/app';
 
 class CycleCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cycleCounts: CYCLECOUNTS
+      cycleCounts: []
     };
   }
 
-  handleCheck(value) {
-    console.log(value);
+  async componentDidMount() {
+    const { response, body } = await Api.get('cycles');
+    switch (response.status) {
+      case 200:
+        this.setState({
+          cycleCounts: body.cycles
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  async handleCheck(value, item, index) {
+    const { cycleCounts } = this.state;
+    const { response } = await Api.put(`cycle/${value.id}`, value);
+    switch (response.status) {
+      case 200:
+        cycleCounts[index] = value;
+        cycleCounts[index].item = item;
+        this.setState({
+          cycleCounts
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   handleSaveRecord() {

@@ -39,6 +39,14 @@ Route::namespace('Api')->group(function () {
         Route::delete('user/{id}', 'UserController@destroy');
         Route::put('user/{id}', 'UserController@update');
 
+        Route::get('costings', 'CostingController@index');
+
+        Route::delete('costing/{id}', 'CostingController@destroy');
+        Route::put('costing/{id}', 'CostingController@update');
+
+        Route::get('cycles', 'CycleController@index');
+        Route::put('cycle/{id}', 'CycleController@update');
+
         Route::get('roles', 'GeneralController@roles');
         Route::get('inventory-types', 'GeneralController@inventory_types');
         Route::get('store-types', 'GeneralController@store_types');

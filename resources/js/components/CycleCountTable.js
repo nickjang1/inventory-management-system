@@ -48,43 +48,52 @@ class CycleCountTable extends Component {
     });
   }
 
-  render() {
-    const {
-      onCheck
-    } = this.props;
+  handleCheck(item, index) {
+    let newData = {};
+    newData = {
+      id: item.id,
+      item_id: item.item_id,
+      on_hand_yesterday: item.on_hand_yesterday,
+      on_hand_today: item.on_hand_today ? 0 : 1,
+      net_consumption: item.net_consumption,
+      standard_cost: item.standard_cost,
+      total_cost: item.total_cost
+    };
+    const { onCheck } = this.props;
+    onCheck(newData, item.item, index);
+  }
 
+  render() {
     const {
       column,
       direction,
       data
     } = this.state;
+    let total_cost = 0;
+    const inventories = JSON.parse(localStorage.getItem('inventory_types'));
+    for (let i = 0; i < data.length; i++) {
+      const cycle = data[i];
+      total_cost += cycle.total_cost;
+    }
 
     return (
       <Table sortable celled selectable unstackable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
-              sorted={column === 'item_code' ? direction : null}
-              onClick={this.handleSort.bind(this, 'item_code')}
             >
               Item Code
             </Table.HeaderCell>
             <Table.HeaderCell
               width="3"
-              sorted={column === 'description' ? direction : null}
-              onClick={this.handleSort.bind(this, 'description')}
             >
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'status' ? direction : null}
-              onClick={this.handleSort.bind(this, 'status')}
             >
               Status
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'inventory_type' ? direction : null}
-              onClick={this.handleSort.bind(this, 'inventory_type')}
             >
               Inventory Type
             </Table.HeaderCell>
@@ -99,6 +108,11 @@ class CycleCountTable extends Component {
               width="1"
             >
               On Hand Today
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              width="1"
+            >
+              Net Consumption
             </Table.HeaderCell>
             <Table.HeaderCell
               width="1"
@@ -123,27 +137,30 @@ class CycleCountTable extends Component {
                   key={index}
                 >
                   <Table.Cell>
-                    {item.item_code}
+                    {item.item.code}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.description}
+                    {item.item.description}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.status ? 'Active' : 'Inactive'}
+                    {item.item.status ? 'Active' : 'Inactive'}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.inventory_type}
+                    {inventories.find(v => v.id === item.item.inventory_type_id) ? inventories.find(v => v.id === item.item.inventory_type_id).name : ''}
                   </Table.Cell>
                   <Table.Cell>
                     {item.on_hand_yesterday}
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className="text-center">
                     <CustomInput
                       id="on_hand_today"
                       type="checkbox"
                       checked={item.on_hand_today}
-                      onChange={() => { onCheck(item); }}
+                      onChange={this.handleCheck.bind(this, item, index)}
                     />
+                  </Table.Cell>
+                  <Table.Cell>
+                    {item.net_consumption}
                   </Table.Cell>
                   <Table.Cell>
                     {item.standard_cost}
@@ -158,12 +175,12 @@ class CycleCountTable extends Component {
         </Table.Body>
         <Table.Footer fullWidth>
           <Table.Row>
-            <Table.HeaderCell colSpan="7">
+            <Table.HeaderCell colSpan="8">
             </Table.HeaderCell>
             <Table.HeaderCell style={{ fontWeight: 700 }}>
               Php
               &nbsp;
-              11,840.50
+              {total_cost}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Footer>

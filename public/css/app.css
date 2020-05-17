@@ -52972,6 +52972,12 @@ h6 {
   position: relative;
 }
 
+@media (max-width: 991.98px) {
+  .site-body {
+    min-height: calc(100vh - 146px);
+  }
+}
+
 .site-sidebar {
   max-width: 360px;
   padding: 20px;
@@ -52986,6 +52992,7 @@ h6 {
     top: 0;
     z-index: 10;
     transition: all 0.5s ease;
+    height: 100%;
   }
 }
 
