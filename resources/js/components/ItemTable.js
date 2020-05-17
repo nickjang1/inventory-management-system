@@ -206,7 +206,7 @@ class ItemTable extends Component {
                     {item.vendor}
                   </Table.Cell>
                   <Table.Cell>
-                    {inventories.find(iv => iv.id === item.inventory_type_id).name}
+                    {inventories && inventories.find(iv => iv.id === item.inventory_type_id) ? inventories.find(iv => iv.id === item.inventory_type_id).name : ''}
                   </Table.Cell>
                   <Table.Cell>
                     {moment(item.updated_at).format('DD/MM/YYYY HH:mm A')}
