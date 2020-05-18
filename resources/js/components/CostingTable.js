@@ -207,7 +207,7 @@ class CostingTable extends Component {
                     {item.item.description}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.item.status ? 'Active' : 'Inactive'}
+                    {item.item.active ? 'Active' : 'Inactive'}
                   </Table.Cell>
                   <Table.Cell>
                     {inventories && inventories.find(v => v.id === item.item.inventory_type_id) ? inventories.find(v => v.id === item.item.inventory_type_id).name : ''}
