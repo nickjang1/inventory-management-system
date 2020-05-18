@@ -36,17 +36,19 @@ class CreateOrder extends Component {
 
   async handleApproval() {
     const { orders } = this.state;
-    const { response, body } = await Api.post('orders/approve', orders);
-    switch (response.status) {
-      case 200:
-        this.setState({
-          orders: [],
-          action: `TRF # ${body.orders.pop().trf_number}`,
-          isOpenSubmittedModal: true
-        });
-        break;
-      default:
-        break;
+    if (orders.length > 0) {
+      const { response, body } = await Api.post('orders/approve', orders);
+      switch (response.status) {
+        case 200:
+          this.setState({
+            orders: [],
+            action: body.orders.length > 0 ? `TRF # ${body.orders.pop().trf_number}` : '',
+            isOpenSubmittedModal: true
+          });
+          break;
+        default:
+          break;
+      }
     }
   }
 
