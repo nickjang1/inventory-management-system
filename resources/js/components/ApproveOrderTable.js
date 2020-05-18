@@ -5,6 +5,7 @@ import {
 } from 'semantic-ui-react';
 
 import _ from 'lodash';
+import { ORDER_STATUSES } from '../config/data';
 
 class ApproveOrderTable extends Component {
   constructor(props) {
@@ -70,8 +71,6 @@ class ApproveOrderTable extends Component {
             </Table.HeaderCell>
             <Table.HeaderCell
               width="3"
-              sorted={column === 'description' ? direction : null}
-              onClick={this.handleSort.bind(this, 'description')}
             >
               Description
             </Table.HeaderCell>
@@ -107,10 +106,10 @@ class ApproveOrderTable extends Component {
                   key={index}
                 >
                   <Table.Cell>
-                    <a href={`trf/${item.trf_number}`}>{item.trf_number}</a>
+                    <a href={`view-orders/${item.id}`}>{`S1-${item.trf_number}`}</a>
                   </Table.Cell>
                   <Table.Cell>
-                    {item.description}
+                    {item.item.description}
                   </Table.Cell>
                   <Table.Cell>
                     {item.created_by}
@@ -121,7 +120,7 @@ class ApproveOrderTable extends Component {
                     {item.total_cost}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.status}
+                    {ORDER_STATUSES.find(v => v.value == item.status) ? ORDER_STATUSES.find(v => v.value == item.status).label : ''}
                   </Table.Cell>
                   <Table.Cell>
                     <div className="actions d-flex w-100 justify-content-center align-items-center">

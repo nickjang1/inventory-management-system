@@ -52734,6 +52734,29 @@ h6 {
   padding: 2em;
 }
 
+.modal-general-item {
+  max-width: 400px;
+  top: 20%;
+}
+
+.modal-general-item .modal-close {
+  cursor: pointer;
+  position: absolute;
+  top: 24px !important;
+  right: 24px !important;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.modal-general-item .close {
+  font-size: 40px;
+}
+
+.modal-general-item .modal-body {
+  padding: 20px;
+}
+
 .modal-edit-item {
   max-width: 768px;
   top: 20%;

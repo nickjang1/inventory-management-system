@@ -1,16 +1,20 @@
 import React, {
   Component
 } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import CycleCountTable from '../../components/CycleCountTable';
 // import { CYCLECOUNTS } from '../../config/data';
 import Api from '../../apis/app';
+import GeneralModal from '../../components/GeneralModal';
+
 
 class CycleCount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cycleCounts: []
+      cycleCounts: [],
+      isOpenSuccessModal: false
     };
   }
 
@@ -43,13 +47,45 @@ class CycleCount extends Component {
     }
   }
 
-  handleSaveRecord() {
+  async handleSaveRecord() {
+    const { cycleCounts } = this.state;
+    let total_cost = 0;
+    for (let i = 0; i < cycleCounts.length; i++) {
+      const cycle = cycleCounts[i];
+      total_cost += cycle.total_cost;
+    }
+    const newData = {
+      total_cost
+    };
+    const { response, body } = await Api.post('record', newData);
+    switch (response.status) {
+      case 200:
+        this.setState({
+          isOpenSuccessModal: true,
+          modalContent: {
+            status: 'Success',
+            content: 'The cycle count record has been added successfully.',
+            action: `Reference: ${body.number}`
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
 
+  handleCancel() {
+    this.setState({
+      isOpenSuccessModal: false
+    });
+    this.props.history.push('view-records');
   }
 
   render() {
     const {
-      cycleCounts
+      cycleCounts,
+      isOpenSuccessModal,
+      modalContent
     } = this.state;
     return (
       <div className="main-page">
@@ -71,9 +107,19 @@ class CycleCount extends Component {
             Save Record...
           </Button>
         </div>
+        {
+          isOpenSuccessModal && (
+            <GeneralModal
+              status={modalContent.status}
+              content={modalContent.content}
+              action={modalContent.action}
+              handleCancel={this.handleCancel.bind(this)}
+            />
+          )
+        }
       </div>
     );
   }
 }
 
-export default CycleCount;
+export default withRouter(CycleCount);

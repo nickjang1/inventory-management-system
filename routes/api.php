@@ -47,6 +47,19 @@ Route::namespace('Api')->group(function () {
         Route::get('cycles', 'CycleController@index');
         Route::put('cycle/{id}', 'CycleController@update');
 
+        Route::get('records', 'RecordController@index');
+        Route::get('records/{id}', 'RecordController@record');
+        Route::post('record', 'RecordController@store');
+
+        Route::get('orders/active', 'OrderController@active');
+        Route::get('orders/pending', 'OrderController@pending');
+        Route::get('orders/all', 'OrderController@orders');
+        Route::get('orders/{id}', 'OrderController@detail');
+        Route::post('orders/approve', 'OrderController@approve');
+        Route::put('order/check/{id}', 'OrderController@check');
+        Route::put('order/done/{id}', 'OrderController@done');
+        Route::delete('order/delete/{id}', 'OrderController@delete');
+
         Route::get('roles', 'GeneralController@roles');
         Route::get('inventory-types', 'GeneralController@inventory_types');
         Route::get('store-types', 'GeneralController@store_types');

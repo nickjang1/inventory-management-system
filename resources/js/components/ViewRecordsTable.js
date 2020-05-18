@@ -50,10 +50,6 @@ class ViewRecordsTable extends Component {
 
   render() {
     const {
-      onSelect
-    } = this.props;
-
-    const {
       column,
       direction,
       data
@@ -76,8 +72,8 @@ class ViewRecordsTable extends Component {
               Date and Time Added
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'added_by' ? direction : null}
-              onClick={this.handleSort.bind(this, 'added_by')}
+              sorted={column === 'created_by' ? direction : null}
+              onClick={this.handleSort.bind(this, 'created_by')}
             >
               Added by
             </Table.HeaderCell>
@@ -97,13 +93,13 @@ class ViewRecordsTable extends Component {
                   key={index}
                 >
                   <Table.Cell>
-                    <a href={`view-records/${item.reference_number}`} onClick={onSelect(item.id)}>{item.reference_number}</a>
+                    <a href={`view-records/${item.id}`}>{item.reference_number}</a>
                   </Table.Cell>
                   <Table.Cell>
                     {moment(item.date_time).format('YYYY-MMM-DD HH:mm A')}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.added_by}
+                    {item.created_by}
                   </Table.Cell>
                   <Table.Cell>
                     {item.total_cost}
@@ -117,9 +113,5 @@ class ViewRecordsTable extends Component {
     );
   }
 }
-
-ViewRecordsTable.defaultProps = {
-  onSelect: () => {}
-};
 
 export default ViewRecordsTable;

@@ -411,6 +411,18 @@ export const STATUSES = [
   }
 ];
 
+export const ORDER_STATUSES = [
+  {
+    label: 'Active', value: 0
+  },
+  {
+    label: 'Pending Approval', value: 1
+  },
+  {
+    label: 'Approved', value: 2
+  }
+];
+
 export const STORE_STATUSES = [
   {
     label: 'OPEN', value: 1

@@ -5,6 +5,7 @@ import {
 } from 'semantic-ui-react';
 
 import _ from 'lodash';
+import { ORDER_STATUSES } from '../config/data';
 
 class ViewOrdersTable extends Component {
   constructor(props) {
@@ -98,10 +99,10 @@ class ViewOrdersTable extends Component {
                   key={index}
                 >
                   <Table.Cell>
-                    <a href={`trf/${item.trf_number}`}>{item.trf_number}</a>
+                    <a href={`view-orders/${item.id}`}>{`S1-${item.trf_number}`}</a>
                   </Table.Cell>
                   <Table.Cell>
-                    {item.description}
+                    {item.item.description}
                   </Table.Cell>
                   <Table.Cell>
                     {item.created_by}
@@ -112,7 +113,7 @@ class ViewOrdersTable extends Component {
                     {item.total_cost}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.status}
+                    {ORDER_STATUSES.find(v => v.value == item.status) ? ORDER_STATUSES.find(v => v.value == item.status).label : ''}
                   </Table.Cell>
                 </Table.Row>
               ))

@@ -22,7 +22,6 @@ class OrderTable extends Component {
   }
 
   componentWillReceiveProps(props) {
-
     const { orders } = props;
     this.setState({
       data: orders
@@ -48,43 +47,54 @@ class OrderTable extends Component {
     });
   }
 
-  render() {
-    const {
-      onCheck
-    } = this.props;
+  handleCheck(order, index) {
+    let newData = {};
+    newData = {
+      id: order.id,
+      final_order: order.final_order,
+      item_id: order.item_id,
+      modified_by: order.modified_by,
+      on_hand: order.on_hand,
+      on_order: order.on_order,
+      status: order.status,
+      suggested_order: order.suggested_order,
+      total_cost: order.total_cost,
+      trf_number: order.trf_number
+    };
+    const { onCheck } = this.props;
+    const { data } = this.state;
+    data[index].final_order = !data[index].final_order;
+    this.setState({
+      data
+    });
+    onCheck(newData);
+  }
 
+  render() {
     const {
       column,
       direction,
       data
     } = this.state;
-
+    const inventories = JSON.parse(localStorage.getItem('inventory_types'));
     return (
       <Table sortable celled selectable unstackable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell
-              sorted={column === 'item_code' ? direction : null}
-              onClick={this.handleSort.bind(this, 'item_code')}
             >
               Item Code
             </Table.HeaderCell>
             <Table.HeaderCell
               width="3"
-              sorted={column === 'description' ? direction : null}
-              onClick={this.handleSort.bind(this, 'description')}
             >
               Description
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'status' ? direction : null}
-              onClick={this.handleSort.bind(this, 'status')}
             >
               Status
             </Table.HeaderCell>
             <Table.HeaderCell
-              sorted={column === 'inventory_type' ? direction : null}
-              onClick={this.handleSort.bind(this, 'inventory_type')}
             >
               Inventory Type
             </Table.HeaderCell>
@@ -120,16 +130,16 @@ class OrderTable extends Component {
                   key={index}
                 >
                   <Table.Cell>
-                    {item.item_code}
+                    {item.item.code}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.description}
+                    {item.item.description}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.status ? 'Active' : 'Inactive'}
+                    {item.item.status ? 'Active' : 'Inactive'}
                   </Table.Cell>
                   <Table.Cell>
-                    {item.inventory_type}
+                    {inventories && inventories.find(v => v.id === item.item.inventory_type_id) ? inventories.find(v => v.id === item.item.inventory_type_id).name : ''}
                   </Table.Cell>
                   <Table.Cell>
                     {item.on_hand}
@@ -145,7 +155,7 @@ class OrderTable extends Component {
                       id="final_order"
                       type="checkbox"
                       checked={item.final_order}
-                      onChange={() => { onCheck(item); }}
+                      onChange={this.handleCheck.bind(this, item, index)}
                     />
                   </Table.Cell>
                 </Table.Row>

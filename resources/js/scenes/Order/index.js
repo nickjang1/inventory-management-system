@@ -3,27 +3,64 @@ import React, {
 } from 'react';
 import { Button } from 'reactstrap';
 import OrderTable from '../../components/OrderTable';
-import { ORDERS } from '../../config/data';
+// import { ORDERS } from '../../config/data';
+import Api from '../../apis/app';
+import GeneralModal from '../../components/GeneralModal';
 
 class CreateOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders: ORDERS
+      orders: [],
+      isOpenSubmittedModal: false,
+      action: ''
     };
   }
 
-  handleCheck(value) {
-    console.log(value);
+  async componentDidMount() {
+    const { response, body } = await Api.get('orders/active');
+    switch (response.status) {
+      case 200:
+        this.setState({
+          orders: body.orders
+        });
+        break;
+      default:
+        break;
+    }
   }
 
-  handleApproval() {
+  async handleCheck(value) {
+    await Api.put(`order/check/${value.id}`);
+  }
 
+  async handleApproval() {
+    const { orders } = this.state;
+    const { response, body } = await Api.post('orders/approve', orders);
+    switch (response.status) {
+      case 200:
+        this.setState({
+          orders: [],
+          action: `TRF # ${body.orders.pop().trf_number}`,
+          isOpenSubmittedModal: true
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  handleCancel() {
+    this.setState({
+      isOpenSubmittedModal: false
+    });
   }
 
   render() {
     const {
-      orders
+      orders,
+      isOpenSubmittedModal,
+      action
     } = this.state;
     return (
       <div className="main-page">
@@ -45,6 +82,16 @@ class CreateOrder extends Component {
             Submit for Approval...
           </Button>
         </div>
+        {
+          isOpenSubmittedModal && (
+            <GeneralModal
+              status="Success"
+              content="Order has been created and is submitted for approval."
+              action={action}
+              handleCancel={this.handleCancel.bind(this)}
+            />
+          )
+        }
       </div>
     );
   }
