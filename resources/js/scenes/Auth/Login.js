@@ -150,7 +150,7 @@ class Login extends Component {
                       {
                         isSubmitting && (
                           <Fragment>
-                            <span className="fa fa-spinner fa-spin" />
+                            <i className="fa fa-spinner fa-spin" />
                             &nbsp;&nbsp;
                           </Fragment>
                         )
